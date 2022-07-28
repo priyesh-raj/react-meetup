@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Layout } from "./components/layout/Layout";
+import { FavouritesContextProvider } from "./store/favourites-context";
 import { AllMeetUps } from "./views/AllMeetUps";
 import { Favourites } from "./views/Favourites";
 import { NewMeetUps } from "./views/NewMeetUps";
