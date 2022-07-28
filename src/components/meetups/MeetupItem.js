@@ -7,13 +7,13 @@ import classes from "./MeetupItem.module.css";
 export function MeetupItem(props) {
   const favouritesCtx = useContext(FavouritesContext);
 
-  const isFavourite = favouritesCtx.isFavourite(props.id);
+  const isFavourite = favouritesCtx.isFavourite(props.item.id);
 
   const handleToggleFavourites = () => {
     if (isFavourite) {
-      favouritesCtx.removeFavourite(props.id);
+      favouritesCtx.removeFavourite(props.item.id);
     } else {
-      favouritesCtx.addFavourite(props);
+      favouritesCtx.addFavourite(props.item);
     }
   };
 
