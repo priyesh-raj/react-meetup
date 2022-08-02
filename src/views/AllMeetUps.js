@@ -2,47 +2,30 @@ import React, { useEffect, useState } from "react";
 
 import { MeetupList } from "../components/meetups/MeetupList";
 
-// const DUMMY_DATA = [
-//   {
-//     id: "m1",
-//     title: "This is a first meetup",
-//     image:
-//       "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/2560px-Stadtbild_M%C3%BCnchen.jpg",
-//     address: "Meetupstreet 5, 12345 Meetup City",
-//     description:
-//       "This is a first, amazing meetup which you definitely should not miss. It will be a lot of fun!",
-//   },
-//   {
-//     id: "m2",
-//     title: "This is a second meetup",
-//     image:
-//       "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/2560px-Stadtbild_M%C3%BCnchen.jpg",
-//     address: "Meetupstreet 5, 12345 Meetup City",
-//     description:
-//       "This is a first, amazing meetup which you definitely should not miss. It will be a lot of fun!",
-//   },
-// ];
-
+export const DB_URL =
+  "https://react-getting-started-eb817-default-rtdb.firebaseio.com/meetups.json";
 export function AllMeetUps() {
   let [allMeetups, setAllMeetups] = useState([]);
   let [isLoading, setLoading] = useState(true);
-  const setLoadingFalse = () => setLoading(false);
+  // const setLoadingFalse = () => setLoading(false);
   // const setLoadingTrue = () => setLoading(true);
 
   useEffect(() => {
-    fetch(
-      "https://react-getting-started-eb817-default-rtdb.firebaseio.com/meetups.json"
-    )
-      .then((resp) => {
-        return resp.json();
-      })
-      .then((data) => {
-        console.log("data", data);
-        const allMeetupsData = addId(data);
-        setAllMeetups(allMeetupsData);
-        setLoadingFalse();
-      });
+    getMeetups().then((data) => {
+      const allMeetupsData = addId(data);
+      setAllMeetups(allMeetupsData);
+      setLoading(false);
+    });
+    return () => {
+      setAllMeetups([]);
+    };
   }, []);
+
+  const getMeetups = async () => {
+    return fetch(DB_URL).then((resp) => {
+      return resp.json();
+    });
+  };
 
   const addId = (resp) => {
     let tempObj = { ...resp };
